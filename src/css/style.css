@@ -1,6 +1,13 @@
-#canvas,
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 #fullScreen {
-    border: 1px solid black;
-    display: block;
-    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 50px;
+    font-size: 24px;
 }

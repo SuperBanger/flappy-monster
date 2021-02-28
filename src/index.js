@@ -4,14 +4,36 @@ const canvas = document.getElementById('canvas');
 /** @type {CanvasRenderingcontext2D} */
 const context = canvas.getContext('2d');
 
+canvas.setAttribute('width', innerWidth);
+canvas.setAttribute('height', innerHeight);
+
 // Game Objects
-const background = new Background(canvas);
-const score = new Score(canvas);
-const wallService = new WallService(canvas);
-const monster = new Monster(canvas);
+let background;
+let score;
+let wallService;
+let monster;
 // Game Objects
 
-let state = gameStates.INITIAL;
+let state;
+
+function setUp() {
+    background = new Background(canvas);
+    score = new Score(canvas);
+    wallService = new WallService(canvas);
+    monster = new Monster(canvas);
+
+    state = gameStates.INITIAL;
+}
+
+function restart() {
+    reset();
+    wallService.startWallGeneration();
+    state = gameStates.GAME_PLAYING;
+}
+
+function setGameOver() {
+    state = gameStates.GAME_OVER
+}
 
 function drawNonPlayBackground() {
     context.fillStyle = 'black';
@@ -33,7 +55,7 @@ function drawGamePlayScreen() {
 
     background.loop();
     score.draw();
-    wallService.drawWalls(monster, () => state = gameStates.GAME_OVER);
+    wallService.drawWalls(monster, setGameOver);
     monster.draw();
 }
 
@@ -70,6 +92,9 @@ canvas.addEventListener('click', () => {
         case gameStates.GAME_PLAYING:
             monster.bump();
             break;
+        case gameStates.GAME_OVER:
+            restart();
+            break;
     }
 });
 
@@ -77,9 +102,7 @@ canvas.addEventListener('keydown', (e) => {
     switch (state) {
         case gameStates.GAME_OVER:
             if (e.code === 'KeyR') {
-                reset();
-                wallService.startWallGeneration();
-                state = gameStates.GAME_PLAYING;
+                restart();
             }
             break;
     }
@@ -97,5 +120,12 @@ fsButton.addEventListener('click', () => {
     }
 });
 
+window.addEventListener('resize', () => {
+    canvas.setAttribute('width', innerWidth);
+    canvas.setAttribute('height', innerHeight);
 
+    setUp();
+});
+
+setUp();
 requestAnimationFrame(runGameLoop);

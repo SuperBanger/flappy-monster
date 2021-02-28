@@ -11,7 +11,7 @@ class Background {
         const width = this._canvas.width;
         const height = this._canvas.height;
 
-        this._context.drawImage(backgroundImage, this._x, 0, width, height);
+        this._context.drawImage(backgroundImage, this._x, 0, width + backgroundGlueSize, height);
         this._context.drawImage(backgroundImage, this._continueX, 0, width, height);
     }
 

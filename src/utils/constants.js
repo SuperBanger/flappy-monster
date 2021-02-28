@@ -11,6 +11,7 @@ const wallWidth = 100;
 
 const backgroundImage = new Image();
 backgroundImage.src = 'src/img/back.png';
+const backgroundGlueSize = 2;
 
 const scoreFont = '45px Verdana';
 const scoreTextOffsetX = 150;
@@ -20,7 +21,7 @@ const gameVelocity = 5;
 const fontColor = 'white';
 const startMsg = 'Click to Start!';
 const startFont = '36px Arial';
-const restartMsg = 'Press R to Restart!';
+const restartMsg = 'Press R or Click to Restart!';
 const restartFont = '24px Arial';
 const restartOffsetY = -50;
 const gameOverMsg = 'Game Over :(';
